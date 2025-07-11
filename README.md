@@ -15,9 +15,16 @@ The easiest way to get started is with a simple empty project, using the [m9lib 
 - Run this application to create an empty vscode project from a template.
 - The application itself is a simple example of an m9lib project.
 
+## Sample Projects
+
+A working demonstration of **m9lib** is available from the sample projects below:
+- [m9lib-project](https://github.com/MarcusNyne/m9lib-project): Create a simple **m9lib** project from a template. (*simple*)
+- [unzip-files](https://github.com/MarcusNyne/unzip-files): Batch process for unziping files. (*simple*)
+- [file-sync](https://github.com/MarcusNyne/file-sync): Rules-based folder synchronization process for backing up files. (*intermediate*)
+
 ## m9ini Configuration files
 
-m9lib uses m9ini for reading configuration files.
+**m9lib** uses **m9ini** for reading configuration files.
 
 Read about [m9ini on Github](https://github.com/MarcusNyne/m9ini).
 
