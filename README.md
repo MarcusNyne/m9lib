@@ -20,7 +20,7 @@ The easiest way to get started is with a simple empty project, using the [m9lib 
 A working demonstration of **m9lib** is available from the sample projects below:
 - [m9lib-project](https://github.com/MarcusNyne/m9lib-project): Create a simple **m9lib** project from a template. (*simple*)
 - [unzip-files](https://github.com/MarcusNyne/unzip-files): Batch process for unziping files. (*simple*)
-- [file-sync](https://github.com/MarcusNyne/file-sync): Rules-based folder synchronization process for backing up files. (*intermediate*)
+- [sync-files](https://github.com/MarcusNyne/sync-files): Rules-based folder synchronization process for backing up files. (*intermediate*)
 
 ## m9ini Configuration files
 
