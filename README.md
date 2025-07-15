@@ -33,7 +33,7 @@ Read about [m9ini on Github](https://github.com/MarcusNyne/m9ini).
 | File | Classes | Feature |
 | :--- | :--- | :--- |
 | u_logger.py | uFileLogger | [Log to a file](docs/logger.md) |
-| u_format.py | uFormat | [String formatting](docs/format.md) |
+| u_format.py | uStringFormat | [String formatting](docs/format.md) |
 | u_folder.py | uFolder | [Folder utilities](docs/folder.md) |
 | u_timer.py | uTimer | [Measure elapsed time](docs/timer.md) |
 | u_dictionary.py | uDictionary | [Dictionary wrapper](docs/dictionary.md) |
