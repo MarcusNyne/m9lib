@@ -102,25 +102,28 @@ class uFolder:
         - **Folders**: result will include folders
         - **Match**: a match string
 
-        Returns a list of (*name*, *path*).
+        Returns a list of (*name*, *path*).  Returns an empty list if the path is not valid.
         '''
         ret_files = []
-        if Recurse:
-            for root, dirs, files in os.walk(Folderpath):
-                if Files:
-                    for file in files:
-                        if fnmatch.fnmatch(file, Match):
-                            ret_files.append((file, root))
-                if Folders:
-                    for file in dirs:
-                        if fnmatch.fnmatch(file, Match):
-                            ret_files.append((file, root))
-        else:
-            for file in os.listdir(Folderpath):
-                if fnmatch.fnmatch(file, Match):
-                    filepath = os.path.join(Folderpath, file)
-                    if (Files and os.path.isfile (filepath)) or (Folders and os.path.isdir (filepath)):
-                        ret_files.append((file, Folderpath))
+        try:
+            if Recurse:
+                for root, dirs, files in os.walk(Folderpath):
+                    if Files:
+                        for file in files:
+                            if fnmatch.fnmatch(file, Match):
+                                ret_files.append((file, root))
+                    if Folders:
+                        for file in dirs:
+                            if fnmatch.fnmatch(file, Match):
+                                ret_files.append((file, root))
+            else:
+                for file in os.listdir(Folderpath):
+                    if fnmatch.fnmatch(file, Match):
+                        filepath = os.path.join(Folderpath, file)
+                        if (Files and os.path.isfile (filepath)) or (Folders and os.path.isdir (filepath)):
+                            ret_files.append((file, Folderpath))
+        except:
+            pass
 
         return ret_files
 
