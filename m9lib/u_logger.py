@@ -204,11 +204,11 @@ class uFileLogger(uLogger):
             
     def Start(self, Filepath:str):
         '''
-        STarts logging to **Filepath**.
+        Starts logging to **Filepath**.
 
         **Filepath** supports **uStringFormat** replacements like **{YMD}** and **{TSM}**.
         '''
-        self.filepath = uStringFormat.String (Filepath)
+        self.filepath = uFolder.NormalizePath(uStringFormat.String (Filepath))
         head, _ = os.path.split(self.filepath)
         uFolder.ConfirmFolder(head)
         self.file = open(self.filepath, 'a')

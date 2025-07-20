@@ -56,7 +56,7 @@ class uWeb:
             # None: overwrite is False and file exists
             # False: failure
 
-        target = FilePath
+        target = uFolder.NormalizePath(FilePath)
         if target is None and FolderPath is not None:
             lurl = Url.split('/')
             if len(lurl)>0:

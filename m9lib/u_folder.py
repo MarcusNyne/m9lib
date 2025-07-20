@@ -9,6 +9,7 @@ import fnmatch
 class uFolder:
 
     def __init__(self, Folderpath, Create=True):
+        Folderpath = uFolder.NormalizePath(Folderpath)
         self.folderpath = Folderpath
 
         if Create:
@@ -28,6 +29,7 @@ class uFolder:
         Returns *True* if the folder exists.
         '''
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 return True
 
@@ -54,6 +56,7 @@ class uFolder:
         Returns *False* if unable to create the folder.
         '''
         try:
+            Rootfolder = uFolder.NormalizePath(Rootfolder)
             index = 1
             ret_folder = None
             while ret_folder is None and index<1000:
@@ -102,25 +105,29 @@ class uFolder:
         - **Folders**: result will include folders
         - **Match**: a match string
 
-        Returns a list of (*name*, *path*).
+        Returns a list of (*name*, *path*).  Returns an empty list if the path is not valid.
         '''
         ret_files = []
-        if Recurse:
-            for root, dirs, files in os.walk(Folderpath):
-                if Files:
-                    for file in files:
-                        if fnmatch.fnmatch(file, Match):
-                            ret_files.append((file, root))
-                if Folders:
-                    for file in dirs:
-                        if fnmatch.fnmatch(file, Match):
-                            ret_files.append((file, root))
-        else:
-            for file in os.listdir(Folderpath):
-                if fnmatch.fnmatch(file, Match):
-                    filepath = os.path.join(Folderpath, file)
-                    if (Files and os.path.isfile (filepath)) or (Folders and os.path.isdir (filepath)):
-                        ret_files.append((file, Folderpath))
+        try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
+            if Recurse:
+                for root, dirs, files in os.walk(Folderpath):
+                    if Files:
+                        for file in files:
+                            if fnmatch.fnmatch(file, Match):
+                                ret_files.append((file, root))
+                    if Folders:
+                        for file in dirs:
+                            if fnmatch.fnmatch(file, Match):
+                                ret_files.append((file, root))
+            else:
+                for file in os.listdir(Folderpath):
+                    if fnmatch.fnmatch(file, Match):
+                        filepath = os.path.join(Folderpath, file)
+                        if (Files and os.path.isfile (filepath)) or (Folders and os.path.isdir (filepath)):
+                            ret_files.append((file, Folderpath))
+        except:
+            pass
 
         return ret_files
 
@@ -155,6 +162,7 @@ class uFolder:
         '''
         folders = []
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 subfolder_folders = []
                 for file in os.listdir(Folderpath):
@@ -187,6 +195,7 @@ class uFolder:
         - *False*: failed
         '''
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 shutil.rmtree(Folderpath)
                 return not os.path.isdir(Folderpath)
@@ -217,3 +226,13 @@ class uFolder:
             os.remove(cfile)
         
         return clean
+    
+    @staticmethod
+    def NormalizePath(Path:str)->str:
+        '''
+        Normalizes a path after converting backspaces to foward slashes for compatibility with Linux.
+        '''
+        if isinstance(Path, str):
+            Path = Path.replace('\\', '/')
+            return os.path.normpath(Path)
+        return Path
