@@ -8,6 +8,7 @@ from enum import Enum
 from datetime import datetime
 from .u_format import uStringFormat
 from .u_type import uType
+from .u_folder import uFolder
 
 class uCSVIdentity(Enum):
     NONE = 0        # no identity column
@@ -91,6 +92,7 @@ class uCSVFormat:
 
         Otherwise, returns a helpful string indicating the reason for failure.
         '''
+        Filepath = uFolder.NormalizePath(Filepath)
         try:
             file = open(Filepath, 'r')
         except:
@@ -124,6 +126,7 @@ class uCSVFormat:
         '''
         file = None
         try:
+            Filepath = uFolder.NormalizePath(Filepath)
             format = uCSVFormat(Header=Header, Delimiter=Delimiter, Identity=Identity)
             file = open(Filepath, 'r')
             line = file.readline().strip('\r\n')
@@ -382,6 +385,7 @@ class uCSV:
 
         file = None
         try:
+            Filepath = uFolder.NormalizePath(Filepath)
             if WriteMode == uCSVWriteMode.CREATE and os.path.isfile(Filepath):
                 return False    # file exists failure
             
@@ -426,6 +430,7 @@ class uCSV:
         # uCSVReadMode.RESET assumes that the file has a header with no identity column 
         # returns False on failure
         # empty file will return failure
+        Filepath = uFolder.NormalizePath(Filepath)
         if os.path.isfile(Filepath) is False:
             return False # file does not exist
         

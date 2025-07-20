@@ -9,6 +9,7 @@ import fnmatch
 class uFolder:
 
     def __init__(self, Folderpath, Create=True):
+        Folderpath = uFolder.NormalizePath(Folderpath)
         self.folderpath = Folderpath
 
         if Create:
@@ -28,6 +29,7 @@ class uFolder:
         Returns *True* if the folder exists.
         '''
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 return True
 
@@ -54,6 +56,7 @@ class uFolder:
         Returns *False* if unable to create the folder.
         '''
         try:
+            Rootfolder = uFolder.NormalizePath(Rootfolder)
             index = 1
             ret_folder = None
             while ret_folder is None and index<1000:
@@ -106,6 +109,7 @@ class uFolder:
         '''
         ret_files = []
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if Recurse:
                 for root, dirs, files in os.walk(Folderpath):
                     if Files:
@@ -158,6 +162,7 @@ class uFolder:
         '''
         folders = []
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 subfolder_folders = []
                 for file in os.listdir(Folderpath):
@@ -190,6 +195,7 @@ class uFolder:
         - *False*: failed
         '''
         try:
+            Folderpath = uFolder.NormalizePath(Folderpath)
             if os.path.isdir(Folderpath):
                 shutil.rmtree(Folderpath)
                 return not os.path.isdir(Folderpath)
@@ -220,3 +226,13 @@ class uFolder:
             os.remove(cfile)
         
         return clean
+    
+    @staticmethod
+    def NormalizePath(Path:str)->str:
+        '''
+        Normalizes a path after converting backspaces to foward slashes for compatibility with Linux.
+        '''
+        if isinstance(Path, str):
+            Path = Path.replace('\\', '/')
+            return os.path.normpath(Path)
+        return Path
